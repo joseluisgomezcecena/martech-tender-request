@@ -3,6 +3,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require_once ("../../settings/settings_db.php");
+
 function sendEmail()
 {
     global $connection;
@@ -13,10 +15,18 @@ function sendEmail()
 
         $today = date("Y-m-d");
 
-        $nextMonthDate = date("Y-m-d H:i:s", strtotime("+30 days",time()));
+        $nextMonthDate = date("Y-m-d", strtotime("+30 days",time()));
 
-        $query = "SELECT * FROM request WHERE date_requested < '$today'";
+        echo $query = "SELECT * FROM request WHERE date_requested < '$today'";
         $result = mysqli_query($connection, $query);
+
+        $row = mysqli_fetch_array($result);
+
+        $tender_number = "T-". date("Y") ."-" . $row['id'];
+
+
+
+
 
         if($result)
         {
@@ -60,9 +70,9 @@ function sendEmail()
 
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
-                $mail->Subject = 'Production tracker error: ' . $category;
-                $mail->Body    = "Error type <b>$category</b><br>$title<br>$content";
-                $mail->AltBody = "Description: $title------$content---------$category";
+                $mail->Subject = 'Tender Request Late: ' . $tender_number;
+                $mail->Body    = "$tender_number is late please finish filling the form";
+                $mail->AltBody = "$tender_number is late please finish filling the form";
 
                 $mail->send();
                 echo "Mail is sent";
@@ -72,3 +82,5 @@ function sendEmail()
         }
     //}
 }
+
+sendEmail();
