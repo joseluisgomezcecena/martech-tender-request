@@ -59,8 +59,8 @@ function sendEmail()
                 //Recipients
                 $mail->setFrom('mailer@martechmedical.com', 'Mailer');
                 $mail->addAddress('jgomez@martechmedical.com', 'JGomez');     //Add a recipient
-                //$mail->addAddress('slandis2@martechmedical.com');               //Name is optional
-                //$mail->addAddress('avalle@martechmedical.com');
+                $mail->addAddress('mmiller@medcompnet.com');               //Name is optional
+                $mail->addAddress('avalle@martechmedical.com');
                 //$mail->addAddress('jvargas@martechmedical.com');
                 //$mail->addAddress('jbrzyski@martechmedical.com');
                 $mail->addReplyTo('info@martechmedical.com', 'Information');
